@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SyncFlow — A powerful OAuth Engine that seamlessly connects HubSpot CRM to your server. Manage contacts, verify credentials, and streamline your CRM integrations.">
+    <title>SyncFlow | HubSpot OAuth Integration Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="logo-text">SyncFlow</span>
+                <span class="logo-badge">v1.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="#overview" class="nav-link" id="nav-overview">Overview</a>
+                <a href="#connect" class="nav-link" id="nav-connect">Connect</a>
+                <a href="#data" class="nav-link" id="nav-data">Data</a>
+                <a href="#api-explorer" class="nav-link" id="nav-api">API</a>
+            </div>
+            <div class="nav-status" id="navStatus">
+                <span class="status-dot disconnected" id="statusDot"></span>
+                <span class="status-label" id="statusLabel">Disconnected</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="overview">
+        <div class="hero-content">
+            <div class="hero-tag">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                OAuth 2.0 Engine — Live Demo
+            </div>
+            <h1 class="hero-title">
+                Connect HubSpot CRM
+                <span class="gradient-text"> Seamlessly</span>
+            </h1>
+            <p class="hero-subtitle">
+                SyncFlow is a secure OAuth 2.0 integration engine that bridges your server with HubSpot's CRM API. 
+                Authorize users, exchange tokens, verify credentials, and fetch live contact data — all in one flow.
+            </p>
+            <div class="hero-actions">
+                <a href="#connect" class="btn btn-primary" id="heroConnectBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Start Integration
+                </a>
+                <a href="#api-explorer" class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Explore API
+                </a>
+            </div>
+        </div>
+
+        <!-- Flow Diagram -->
+        <div class="flow-diagram">
+            <div class="flow-step flow-step--active" id="flowStep1">
+                <div class="flow-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <span>User Context</span>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step" id="flowStep2">
+                <div class="flow-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>OAuth Grant</span>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step" id="flowStep3">
+                <div class="flow-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Token Exchange</span>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step" id="flowStep4">
+                <div class="flow-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="2"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" stroke="currentColor" stroke-width="2"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <span>CRM Data</span>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="hero-stats">
+            <div class="stat-card">
+                <span class="stat-number" id="statEndpoints">4</span>
+                <span class="stat-label">API Endpoints</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">OAuth 2.0</span>
+                <span class="stat-label">Protocol</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">Redis</span>
+                <span class="stat-label">Token Storage</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">HubSpot</span>
+                <span class="stat-label">CRM Provider</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App -->
+    <main class="main-content">
+
+        <!-- Step 1: Connect Section -->
+        <section class="section" id="connect">
+            <div class="section-header">
+                <div class="section-number">01</div>
+                <div>
+                    <h2 class="section-title">Connect HubSpot</h2>
+                    <p class="section-desc">Enter your User ID and Organization ID to initiate the OAuth 2.0 authorization flow with HubSpot CRM.</p>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <!-- Authorization Card -->
+                <div class="card card--primary" id="authCard">
+                    <div class="card-header">
+                        <div class="card-icon card-icon--purple">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Authorize HubSpot</h3>
+                            <p class="card-subtitle">POST /integrations/hubspot/authorize</p>
+                        </div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label" for="authUserId">User ID</label>
+                            <input type="text" id="authUserId" class="form-input" placeholder="e.g. user_001" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="authOrgId">Organization ID</label>
+                            <input type="text" id="authOrgId" class="form-input" placeholder="e.g. org_acme" autocomplete="off">
+                        </div>
+                        <button class="btn btn-primary btn-full" id="authorizeBtn" onclick="handleAuthorize()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Generate Auth URL & Connect
+                        </button>
+                        <div class="response-area" id="authResponse" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Verify Credentials Card -->
+                <div class="card" id="verifyCard">
+                    <div class="card-header">
+                        <div class="card-icon card-icon--green">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Verify Credentials</h3>
+                            <p class="card-subtitle">POST /integrations/hubspot/credentials</p>
+                        </div>
+                        <div class="method-badge method-post">POST</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label" for="verifyUserId">User ID</label>
+                            <input type="text" id="verifyUserId" class="form-input" placeholder="e.g. user_001" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="verifyOrgId">Organization ID</label>
+                            <input type="text" id="verifyOrgId" class="form-input" placeholder="e.g. org_acme" autocomplete="off">
+                        </div>
+                        <button class="btn btn-success btn-full" id="verifyBtn" onclick="handleVerify()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Verify Connection
+                        </button>
+                        <div class="response-area" id="verifyResponse" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Data Section -->
+        <section class="section" id="data">
+            <div class="section-header">
+                <div class="section-number">02</div>
+                <div>
+                    <h2 class="section-title">Load CRM Data</h2>
+                    <p class="section-desc">Fetch live contacts from your connected HubSpot CRM. Requires a completed OAuth authorization first.</p>
+                </div>
+            </div>
+
+            <div class="data-panel">
+                <div class="data-controls">
+                    <div class="data-inputs">
+                        <div class="form-group form-group--inline">
+                            <label class="form-label" for="loadUserId">User ID</label>
+                            <input type="text" id="loadUserId" class="form-input" placeholder="e.g. user_001" autocomplete="off">
+                        </div>
+                        <div class="form-group form-group--inline">
+                            <label class="form-label" for="loadOrgId">Organization ID</label>
+                            <input type="text" id="loadOrgId" class="form-input" placeholder="e.g. org_acme" autocomplete="off">
+                        </div>
+                        <button class="btn btn-primary" id="loadBtn" onclick="handleLoadContacts()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="1 4 1 10 7 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Fetch Contacts
+                        </button>
+                    </div>
+                    <div class="data-info">
+                        <span class="info-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="2"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" stroke="currentColor" stroke-width="2"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke="currentColor" stroke-width="2"/></svg>
+                            POST /integrations/hubspot/load
+                        </span>
+                        <span class="info-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            Limit: 10 contacts
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div class="loading-container" id="loadingContainer" style="display:none;">
+                    <div class="spinner"></div>
+                    <p>Fetching contacts from HubSpot CRM...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>No Contacts Loaded</h3>
+                    <p>Complete the OAuth flow above, then click "Fetch Contacts" to load your HubSpot CRM contacts.</p>
+                </div>
+
+                <!-- Contacts Grid -->
+                <div class="contacts-grid" id="contactsGrid" style="display:none;"></div>
+
+                <!-- Error State -->
+                <div class="error-state" id="errorState" style="display:none;">
+                    <div class="error-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Failed to Load Contacts</h3>
+                    <p id="errorMessage">Something went wrong. Make sure you've completed the OAuth flow first.</p>
+                    <button class="btn btn-secondary" onclick="handleLoadContacts()">Try Again</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: API Explorer -->
+        <section class="section" id="api-explorer">
+            <div class="section-header">
+                <div class="section-number">03</div>
+                <div>
+                    <h2 class="section-title">API Explorer</h2>
+                    <p class="section-desc">Inspect each REST endpoint powering the SyncFlow OAuth Engine — request shapes, parameters, and expected responses.</p>
+                </div>
+            </div>
+
+            <div class="api-explorer">
+                <!-- Endpoints Sidebar -->
+                <div class="api-sidebar">
+                    <div class="api-sidebar-title">Endpoints</div>
+                    <button class="api-endpoint active" id="ep-authorize" onclick="showEndpoint('authorize')">
+                        <span class="method-dot method-post"></span>
+                        <span>/authorize</span>
+                    </button>
+                    <button class="api-endpoint" id="ep-callback" onclick="showEndpoint('callback')">
+                        <span class="method-dot method-get"></span>
+                        <span>/oauth2callback</span>
+                    </button>
+                    <button class="api-endpoint" id="ep-credentials" onclick="showEndpoint('credentials')">
+                        <span class="method-dot method-post"></span>
+                        <span>/credentials</span>
+                    </button>
+                    <button class="api-endpoint" id="ep-load" onclick="showEndpoint('load')">
+                        <span class="method-dot method-post"></span>
+                        <span>/load</span>
+                    </button>
+                </div>
+
+                <!-- Endpoint Detail -->
+                <div class="api-detail" id="apiDetail">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <div class="logo-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>SyncFlow</span>
+            </div>
+            <p class="footer-desc">OAuth 2.0 Integration Engine for HubSpot CRM. Built with Node.js, Express, Redis, and Axios.</p>
+            <div class="footer-tech">
+                <span class="tech-pill">Node.js</span>
+                <span class="tech-pill">Express</span>
+                <span class="tech-pill">Redis</span>
+                <span class="tech-pill">Axios</span>
+                <span class="tech-pill">HubSpot API</span>
+                <span class="tech-pill">OAuth 2.0</span>
+            </div>
+            <p class="footer-copy">Developed by Abdullah Aakukara &nbsp;·&nbsp; SyncFlow v1.0 &nbsp;·&nbsp; <a href="https://github.com/Abdullah-Aakukara/SyncFlow-OAuth" target="_blank" rel="noopener noreferrer" class="footer-github-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:4px;"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>GitHub</a></p>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
