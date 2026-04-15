@@ -2,7 +2,7 @@
    SYNCFLOW — OAUTH INTEGRATION ENGINE FRONTEND LOGIC
    ============================================================ */
 
-const API_BASE = 'http://localhost:8000/integrations/hubspot';
+const API_BASE = '/integrations/hubspot';
 
 // ── State ────────────────────────────────────────────────
 const state = {
