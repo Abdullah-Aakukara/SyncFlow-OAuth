@@ -1,8 +1,10 @@
-/* ============================================================
-   SYNCFLOW — OAUTH INTEGRATION ENGINE FRONTEND LOGIC
-   ============================================================ */
+require('dotenv').config({path: '../.env'})
 
-const API_BASE = '/integrations/hubspot';
+if (process.env.NODE_ENV !== 'production') {
+    const API_BASE = 'localhost:8000/integrations/hubspot';
+} else {
+    const API_BASE = '/integrations/hubspot'; // for production
+}
 
 // ── State ────────────────────────────────────────────────
 const state = {

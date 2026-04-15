@@ -16,12 +16,14 @@ const oauth2callbackHubspot = async (req, res) => {
             })
         }
         
+        const redirectUri = process.env.NODE_ENV !== 'production' ? 'http://localhost:8000/integrations/hubspot/oauth2callback' : 'https://syncflow-oauth.onrender.com/integrations/hubspot/oauth2callback'
+
         const tokenExchange = new URLSearchParams();
 
         tokenExchange.append('grant_type', 'authorization_code');
         tokenExchange.append('client_id', process.env.CLIENT_ID);
         tokenExchange.append('client_secret', process.env.CLIENT_SECRET);
-        tokenExchange.append('redirect_uri', 'http://localhost:8000/integrations/hubspot/oauth2callback' );
+        tokenExchange.append('redirect_uri', redirectUri );
         tokenExchange.append('code', authCode);
 
 
