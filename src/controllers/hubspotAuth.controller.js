@@ -14,10 +14,12 @@ const authorizeHubspot = async (req, res) => {
 
         await redisClient.set(`State of ${userId}:${orgId}`, state);
 
+        let oAuthUrl;
+
         if (process.env.NODE_ENV !== 'production') {
-            const oAuthUrl = `https://app-na2.hubspot.com/oauth/authorize?client_id=e5a25490-fdd3-4c4c-a675-50b51aea9499&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fintegrations%2Fhubspot%2Foauth2callback&scope=oauth+crm.objects.contacts.read&state=${encodeURIComponent(state)}`
+            oAuthUrl = `https://app-na2.hubspot.com/oauth/authorize?client_id=e5a25490-fdd3-4c4c-a675-50b51aea9499&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fintegrations%2Fhubspot%2Foauth2callback&scope=oauth+crm.objects.contacts.read&state=${encodeURIComponent(state)}`
         } else {
-            const oAuthUrl = `https://app-na2.hubspot.com/oauth/authorize?client_id=e5a25490-fdd3-4c4c-a675-50b51aea9499&redirect_uri=https%3A%2F%2Fsyncflow-oauth.onrender.com%2Fintegrations%2Fhubspot%2Foauth2callback&scope=oauth+crm.objects.contacts.read&state=${encodeURIComponent(state)}`
+            oAuthUrl = `https://app-na2.hubspot.com/oauth/authorize?client_id=e5a25490-fdd3-4c4c-a675-50b51aea9499&redirect_uri=https%3A%2F%2Fsyncflow-oauth.onrender.com%2Fintegrations%2Fhubspot%2Foauth2callback&scope=oauth+crm.objects.contacts.read&state=${encodeURIComponent(state)}`
         }
 
         res.status(200).json({

@@ -1,11 +1,4 @@
-require('dotenv').config({path: '../.env'})
-
-let API_BASE = ''
-if (process.env.NODE_ENV !== 'production') {
-    API_BASE = 'localhost:8000/integrations/hubspot';
-} else {
-    API_BASE = 'integrations/hubspot'; // for production
-}
+const API_BASE = '/integrations/hubspot';
 
 // ── State ────────────────────────────────────────────────
 const state = {
@@ -136,21 +129,42 @@ async function handleAuthorize() {
         // Open the OAuth popup
         const popup = window.open(data.authUrl, 'hubspot_oauth', 'width=600,height=700,scrollbars=yes');
 
-        // Poll for popup close (means token was exchanged)
-        const pollTimer = setInterval(() => {
+        // Poll for popup close
+        const pollTimer = setInterval(async () => {
             if (popup && popup.closed) {
                 clearInterval(pollTimer);
-                completeFlowStep(2);
-                completeFlowStep(3);
-                state.connected = true;
-                updateNavStatus('connected');
-                showToast('OAuth complete! Token stored in Redis.', 'success');
-                setResponse('authResponse',
-                    `✅ OAuth 2.0 Flow Complete!\n\nUser: ${userId}\nOrg:  ${orgId}\n\nAccess token has been exchanged and stored securely in Redis.\nYou can now verify credentials or load CRM contacts.`,
-                    'success'
-                );
-                // Complete final step
-                setTimeout(() => completeFlowStep(4), 500);
+                
+                // VERIFICATION STEP: Check if the token was actually saved in Redis
+                try {
+                    const checkRes = await fetch(`${API_BASE}/credentials`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ userId, orgId }),
+                    });
+
+                    if (checkRes.ok) {
+                        // Token exists — the user completed the flow
+                        completeFlowStep(2);
+                        completeFlowStep(3);
+                        state.connected = true;
+                        updateNavStatus('connected');
+                        showToast('OAuth complete! Token stored in Redis.', 'success');
+                        setResponse('authResponse',
+                            `✅ OAuth 2.0 Flow Complete!\n\nUser: ${userId}\nOrg:  ${orgId}\n\nAccess token has been exchanged and stored securely in Redis.\nYou can now verify credentials or load CRM contacts.`,
+                            'success'
+                        );
+                        // Complete final step
+                        setTimeout(() => completeFlowStep(4), 500);
+                    } else {
+                        // Token does NOT exist — the user closed the window prematurely
+                        setResponse('authResponse', `❌ OAuth Flow Incomplete.\n\nThe authorization window was closed before the HubSpot connection could be completed.`, 'error');
+                        showToast('Authorization cancelled.', 'error');
+                        updateNavStatus('disconnected');
+                    }
+                } catch (err) {
+                    setResponse('authResponse', `❌ Verification Error: ${err.message}`, 'error');
+                    updateNavStatus('disconnected');
+                }
             }
         }, 800);
 
