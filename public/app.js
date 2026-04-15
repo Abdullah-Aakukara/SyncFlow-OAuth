@@ -1,9 +1,10 @@
 require('dotenv').config({path: '../.env'})
 
+let API_BASE = ''
 if (process.env.NODE_ENV !== 'production') {
-    const API_BASE = 'localhost:8000/integrations/hubspot';
+    API_BASE = 'localhost:8000/integrations/hubspot';
 } else {
-    const API_BASE = '/integrations/hubspot'; // for production
+    API_BASE = 'integrations/hubspot'; // for production
 }
 
 // ── State ────────────────────────────────────────────────

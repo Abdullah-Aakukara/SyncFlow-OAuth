@@ -29,7 +29,11 @@ Handles authorization, token exchange, CSRF validation, and live CRM data fetchi
 ## Project Structure
 
 ```
-backend/
+root/
+├── public/                                       # Static Assets
+|     ├── index.html
+|     ├── style.css
+|     └── app.js
 ├── main.js                                       # Entry point
 ├── .env                                          # Environment variables
 ├── redis/
